@@ -1,3 +1,5 @@
-// Auth types
-
-export interface user {}
+export interface User {
+  id: string;
+  username: string;
+  email: string;
+}

@@ -1,4 +1,4 @@
-const TOKEN_KEY = 'jwtToken';
+const TOKEN_KEY = "jwtToken";
 
 export const storage = {
   getToken: () => {

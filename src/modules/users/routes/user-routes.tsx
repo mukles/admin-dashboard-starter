@@ -1,16 +1,16 @@
-import { createRoute } from '@tanstack/react-router';
-import { rootRoute } from '@/app/router/root-route';
-import { UsersListPage } from '../pages/users-list';
-import { UserDetailPage } from '../pages/user-detail';
+import { rootRoute } from "@/app/router/root-route";
+import { createRoute } from "@tanstack/react-router";
+import { UserDetailPage } from "../pages/user-detail";
+import { UsersListPage } from "../pages/users-list";
 
 export const usersListRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/users',
+  path: "/users",
   component: UsersListPage,
 });
 
 export const userDetailRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/users/$userId',
+  path: "/users/$userId",
   component: UserDetailPage,
 });

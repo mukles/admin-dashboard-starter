@@ -1,10 +1,10 @@
-import axios from 'axios';
-import { storage } from './storage';
+import axios from "axios";
+import { storage } from "./storage";
 
 const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/api',
+  baseURL: import.meta.env.VITE_API_URL || "/api",
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 

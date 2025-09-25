@@ -6,6 +6,6 @@ export function useRouteGuard() {
   const { user } = useAuth();
 
   if (!user) {
-    router.navigate({ to: "/login" });
+    router.navigate({ to: "/" });
   }
 }

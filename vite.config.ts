@@ -5,7 +5,14 @@ import path from "path";
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  plugins: [react(), tanstackRouter(), tailwindcss()],
+  plugins: [
+    tanstackRouter({
+      target: "react",
+      autoCodeSplitting: true,
+    }),
+    react(),
+    tailwindcss(),
+  ],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

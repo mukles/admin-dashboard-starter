@@ -3,9 +3,6 @@ import { routeTree } from "./route-tree";
 
 export const router = createRouter({
   routeTree,
-  context: {
-    auth: undefined,
-  },
 });
 
 declare module "@tanstack/react-router" {

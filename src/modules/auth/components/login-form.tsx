@@ -8,11 +8,13 @@ import {
   FormMessage,
 } from "@/shared/components/ui/form";
 import { Input } from "@/shared/components/ui/input";
-import { cookieService } from "@/shared/services";
+import { cookieService, localStorageService } from "@/shared/services";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { useNavigate } from "@tanstack/react-router";
+import { toast } from "sonner";
 import { authService } from "../services";
 
 const formSchema = z.object({
@@ -21,6 +23,7 @@ const formSchema = z.object({
 });
 
 export function LoginForm() {
+  const navigate = useNavigate();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -33,7 +36,9 @@ export function LoginForm() {
     const user = await authService.login(values.email, values.password);
     cookieService.setCookie("accessToken", user.accessToken);
     cookieService.setCookie("refreshToken", user.refreshToken);
-    window.location.reload();
+    localStorageService.setItem("user", user);
+    toast.success("Login successful");
+    navigate({ to: "/" });
   }
 
   return (

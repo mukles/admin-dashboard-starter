@@ -7,7 +7,6 @@ export interface Session extends User {}
 
 export const decodeJwt = (token: string): Session | null => {
   try {
-    // console.log("Decoding JWT:", token);
     return jwtDecode(token);
   } catch (error) {
     console.error(
@@ -29,5 +28,5 @@ export const getSession = (): Session | null => {
 export const isAuthenticated = (): boolean => {
   const session = getSession();
   if (!session) return false;
-  return !!session.id;
+  return !!session;
 };

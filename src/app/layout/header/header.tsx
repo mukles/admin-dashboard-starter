@@ -15,6 +15,9 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/components/ui/dropdown-menu";
 import { Input } from "@/shared/components/ui/input";
+import { Separator } from "@/shared/components/ui/separator";
+import { SidebarTrigger } from "@/shared/components/ui/sidebar";
+import { cn } from "@/shared/utils";
 import { Bell, Search, User } from "lucide-react";
 
 interface HeaderProps {
@@ -23,8 +26,20 @@ interface HeaderProps {
 
 export function Header({ className }: HeaderProps) {
   return (
-    <header className={`border-b border-border bg-card ${className}`}>
-      <div className="flex h-16 items-center justify-between px-6">
+    <header
+      className={cn(
+        "border-b border-border bg-card flex h-16 shrink-0 items-center gap-2",
+        className
+      )}
+    >
+      <div className="flex items-center gap-2 px-4">
+        <SidebarTrigger className="-ml-1" />
+        <Separator
+          orientation="vertical"
+          className="mr-2 data-[orientation=vertical]:h-4"
+        />
+      </div>
+      <div className="flex-1 flex h-16 items-center justify-between px-6">
         {/* Search */}
         <div className="flex-1 max-w-md">
           <div className="relative">

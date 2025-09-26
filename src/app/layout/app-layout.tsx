@@ -1,20 +1,20 @@
 import {
   Sidebar,
   SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarInset,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
 } from "@/shared/components/ui/sidebar";
-import { Outlet } from "@tanstack/react-router";
 
+import { NavUser } from "@/shared/components/nav-user";
+import { Link, Outlet } from "@tanstack/react-router";
 import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
 import { Header } from "./header";
 
-// Menu items.
 const items = [
   {
     title: "Home",
@@ -47,32 +47,50 @@ export function AppLayout() {
   return (
     <SidebarProvider>
       <Sidebar>
+        <SidebarHeader>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                asChild
+                className="data-[slot=sidebar-menu-button]:!p-1.5"
+              >
+                <Link to="/">
+                  <span className="text-base font-semibold">Logo</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarHeader>
         <SidebarContent>
-          <SidebarGroup>
-            <SidebarGroupLabel>Application</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
-                      <a href={item.url}>
-                        <item.icon />
-                        <span>{item.title}</span>
-                      </a>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
+          <SidebarMenu>
+            {items.map((item) => (
+              <SidebarMenuItem key={item.title}>
+                <SidebarMenuButton asChild>
+                  <a href={item.url}>
+                    <item.icon />
+                    <span>{item.title}</span>
+                  </a>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
+          </SidebarMenu>
         </SidebarContent>
+        <SidebarFooter>
+          <NavUser
+            user={{
+              name: "John Doe",
+              email: "john@example.com",
+              avatar: "/avatars/john.jpg",
+            }}
+          />
+        </SidebarFooter>
       </Sidebar>
-      <div className="flex-1">
+      <SidebarInset>
         <Header />
-        <main>
+        <div className="flex flex-1 flex-col gap-4 p-4">
           <Outlet />
-        </main>
-      </div>
+        </div>
+      </SidebarInset>
     </SidebarProvider>
   );
 }

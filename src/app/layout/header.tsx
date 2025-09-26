@@ -1,5 +1,4 @@
 import { ModeToggle } from "@/shared/components/mode-toggle";
-import { NavUser } from "@/shared/components/nav-user";
 import { Badge } from "@/shared/components/ui/badge";
 import { Button } from "@/shared/components/ui/button";
 import {
@@ -13,6 +12,7 @@ import {
 import { Input } from "@/shared/components/ui/input";
 import { Separator } from "@/shared/components/ui/separator";
 import { SidebarTrigger } from "@/shared/components/ui/sidebar";
+import UserDropdown from "@/shared/components/user-dropdown";
 import { cn } from "@/shared/utils";
 import { Bell, Search } from "lucide-react";
 
@@ -102,7 +102,7 @@ export function Header({ className }: HeaderProps) {
           <ModeToggle />
 
           {/* User Menu */}
-          <NavUser />
+          <UserDropdown side={undefined} align={undefined} sideOffset={10} />
         </div>
       </div>
     </header>

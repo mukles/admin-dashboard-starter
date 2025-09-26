@@ -12,6 +12,7 @@ import { cookieService } from "@/shared/services";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+
 import { authService } from "../services";
 
 const formSchema = z.object({
@@ -32,6 +33,7 @@ export function LoginForm() {
     const user = await authService.login(values.email, values.password);
     cookieService.setCookie("accessToken", user.accessToken);
     cookieService.setCookie("refreshToken", user.refreshToken);
+    window.location.reload();
   }
 
   return (

@@ -1,41 +1,29 @@
 import { Link } from "@tanstack/react-router";
+import { Shield } from "lucide-react";
 
-interface LogoProps {
-  src?: string;
-  alt?: string;
-  title?: string;
-  width?: number;
-  height?: number;
-  url?: string;
-  className?: string;
-  showTitle?: boolean;
-}
+// interface LogoProps {
+//   src?: string;
+//   alt?: string;
+//   title?: string;
+//   width?: number;
+//   height?: number;
+//   url?: string;
+//   className?: string;
+//   showTitle?: boolean;
+// }
 
-export default function Logo(props: LogoProps) {
-  const logo = {
-    url: props.url ?? "/",
-    src: props.src,
-    alt: props.alt ?? "Logo",
-    width: props.width ?? 150,
-    height: props.height ?? 27,
-    text: props.title ?? "Logo",
-  };
-
-  const logoSrc = logo.src;
-
+export default function Logo() {
   return (
     <Link to={`/`} className="flex items-center gap-2">
-      {logoSrc && !props.showTitle ? (
-        <img
-          width={logo.width}
-          height={logo.height}
-          src={logoSrc}
-          alt={logo.alt}
-          className={props.className}
-        />
-      ) : (
-        <h1 className={"text-2xl font-semibold"}>{logo.text}</h1>
-      )}
+      <div className="flex items-center gap-3">
+        <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary">
+          <Shield className="h-5 w-5 text-primary-foreground" />
+        </div>
+        <div>
+          <h1 className="text-lg font-semibold text-foreground">AdminPanel</h1>
+          <p className="text-xs text-muted-foreground">Management System</p>
+        </div>
+      </div>
     </Link>
   );
 }

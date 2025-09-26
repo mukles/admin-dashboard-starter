@@ -11,7 +11,6 @@ import { Input } from "@/shared/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useAuth } from "../hooks";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -19,7 +18,6 @@ const formSchema = z.object({
 });
 
 export function LoginForm() {
-  const { login } = useAuth();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -29,7 +27,7 @@ export function LoginForm() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    login(values.email, values.password);
+    // login(values.email, values.password);
   }
 
   return (

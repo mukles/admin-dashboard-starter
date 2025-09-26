@@ -1,58 +1,66 @@
-import { createContext, useContext, useEffect, useState } from "react";
+"use client";
+
+import React, { createContext, useContext, useState } from "react";
 
 type Theme = "dark" | "light" | "system";
 
 type ThemeProviderProps = {
   children: React.ReactNode;
   defaultTheme?: Theme;
-  storageKey?: string;
 };
+
+type Coords = { x: number; y: number };
 
 type ThemeProviderState = {
   theme: Theme;
   setTheme: (theme: Theme) => void;
+  toggleTheme: (coords?: Coords) => void;
 };
 
 const initialState: ThemeProviderState = {
-  theme: "system",
+  theme: "light",
   setTheme: () => null,
+  toggleTheme: () => null,
 };
 
 const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
 
-export function ThemeProvider({
-  children,
-  defaultTheme = "system",
-  storageKey = "vite-ui-theme",
-  ...props
-}: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(
-    () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
-  );
+export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
+  const [themeState, setThemeState] = useState<{ currentMode: Theme }>({
+    currentMode: props.defaultTheme || "light",
+  });
 
-  useEffect(() => {
-    const root = window.document.documentElement;
+  const handleThemeChange = (newMode: Theme) => {
+    setThemeState({ ...themeState, currentMode: newMode });
+  };
 
-    root.classList.remove("light", "dark");
+  const handleThemeToggle = (coords?: Coords) => {
+    const root = document.documentElement;
+    const newMode = themeState.currentMode === "light" ? "dark" : "light";
 
-    if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-        .matches
-        ? "dark"
-        : "light";
-      root.classList.add(systemTheme);
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (!document.startViewTransition || prefersReducedMotion) {
+      handleThemeChange(newMode);
       return;
     }
 
-    root.classList.add(theme);
-  }, [theme]);
+    if (coords) {
+      root.style.setProperty("--x", `${coords.x}px`);
+      root.style.setProperty("--y", `${coords.y}px`);
+    }
 
-  const value = {
-    theme,
-    setTheme: (theme: Theme) => {
-      localStorage.setItem(storageKey, theme);
-      setTheme(theme);
-    },
+    document.startViewTransition(() => {
+      handleThemeChange(newMode);
+    });
+  };
+
+  const value: ThemeProviderState = {
+    theme: themeState.currentMode,
+    setTheme: handleThemeChange,
+    toggleTheme: handleThemeToggle,
   };
 
   return (

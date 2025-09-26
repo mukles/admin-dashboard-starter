@@ -1,10 +1,11 @@
 "use client";
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
-type Theme = "dark" | "light" | "system";
+export type Theme = "dark" | "light" | "system";
 
 type ThemeProviderProps = {
+  storageKey: string;
   children: React.ReactNode;
   defaultTheme?: Theme;
 };
@@ -14,7 +15,7 @@ type Coords = { x: number; y: number };
 type ThemeProviderState = {
   theme: Theme;
   setTheme: (theme: Theme) => void;
-  toggleTheme: (coords?: Coords) => void;
+  toggleTheme: (newMode: Theme, coords?: Coords) => void;
 };
 
 const initialState: ThemeProviderState = {
@@ -25,25 +26,44 @@ const initialState: ThemeProviderState = {
 
 const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
 
-export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
-  const [themeState, setThemeState] = useState<{ currentMode: Theme }>({
-    currentMode: props.defaultTheme || "light",
-  });
+export function ThemeProvider({
+  children,
+  storageKey = "theme-mode",
+  defaultTheme = "system",
+  ...props
+}: ThemeProviderProps) {
+  const [themeState, setThemeState] = useState<{ currentMode: Theme }>(() => ({
+    currentMode: (localStorage.getItem(storageKey) as Theme) || defaultTheme,
+  }));
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (!root) return;
+    updateThemeClass(root, themeState.currentMode);
+  }, [themeState]);
 
   const handleThemeChange = (newMode: Theme) => {
+    localStorage.setItem(storageKey, newMode);
     setThemeState({ ...themeState, currentMode: newMode });
   };
 
-  const handleThemeToggle = (coords?: Coords) => {
+  const handleThemeToggle = (currentMode: Theme, coords?: Coords) => {
     const root = document.documentElement;
-    const newMode = themeState.currentMode === "light" ? "dark" : "light";
+
+    let newMode = currentMode;
+
+    if (newMode === "system") {
+      newMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+    }
 
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
     if (!document.startViewTransition || prefersReducedMotion) {
-      handleThemeChange(newMode);
+      handleThemeChange(currentMode);
       return;
     }
 
@@ -52,9 +72,25 @@ export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
       root.style.setProperty("--y", `${coords.y}px`);
     }
 
+    localStorage.setItem(storageKey, currentMode);
     document.startViewTransition(() => {
-      handleThemeChange(newMode);
+      handleThemeChange(currentMode);
     });
+  };
+
+  const updateThemeClass = (root: HTMLElement, mode: Theme) => {
+    if (mode === "light") {
+      root.classList.remove("dark");
+    } else if (mode === "system") {
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+        .matches
+        ? "dark"
+        : "light";
+      root.classList.add(systemTheme);
+      return;
+    } else {
+      root.classList.add("dark");
+    }
   };
 
   const value: ThemeProviderState = {

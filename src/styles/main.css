@@ -6,6 +6,7 @@
 @import "./variables.css";
 @import "./theme.css";
 @import "./utilities.css";
+@import "./animations.css";
 
 @layer base {
   @import "./base.css";

@@ -13,6 +13,7 @@ const dummyUser: User = {
 
 export const authService = {
   login: async (email: string, password: string) => {
+    console.log("Logging in with", email, password);
     return new Promise<User>((resolve) => {
       setTimeout(() => {
         resolve(dummyUser);

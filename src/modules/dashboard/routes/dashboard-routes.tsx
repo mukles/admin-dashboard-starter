@@ -1,9 +1,9 @@
-import { rootRoute } from "@/app/router/root-route";
+import { protectedRoute } from "@/app/router/protected-route";
 import { createRoute } from "@tanstack/react-router";
 import { DashboardPage } from "../pages/dashboard";
 
 export const dashboardRoute = createRoute({
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => protectedRoute,
   path: "/",
   component: DashboardPage,
 });

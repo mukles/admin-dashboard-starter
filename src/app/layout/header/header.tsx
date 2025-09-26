@@ -1,9 +1,5 @@
 import { ModeToggle } from "@/shared/components/mode-toggle";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/shared/components/ui/avatar";
+import { NavUser } from "@/shared/components/nav-user";
 import { Badge } from "@/shared/components/ui/badge";
 import { Button } from "@/shared/components/ui/button";
 import {
@@ -18,7 +14,7 @@ import { Input } from "@/shared/components/ui/input";
 import { Separator } from "@/shared/components/ui/separator";
 import { SidebarTrigger } from "@/shared/components/ui/sidebar";
 import { cn } from "@/shared/utils";
-import { Bell, Search, User } from "lucide-react";
+import { Bell, Search } from "lucide-react";
 
 interface HeaderProps {
   className?: string;
@@ -106,31 +102,7 @@ export function Header({ className }: HeaderProps) {
           <ModeToggle />
 
           {/* User Menu */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="h-9 gap-2 pl-2 pr-3">
-                <Avatar className="h-6 w-6">
-                  <AvatarImage src="https://images.pexels.com/photos/3772066/pexels-photo-3772066.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=2" />
-                  <AvatarFallback>JD</AvatarFallback>
-                </Avatar>
-                <span className="text-sm">John Doe</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <User className="mr-2 h-4 w-4" />
-                Profile
-              </DropdownMenuItem>
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuItem>Support</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-red-600">
-                Log out
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <NavUser />
         </div>
       </div>
     </header>

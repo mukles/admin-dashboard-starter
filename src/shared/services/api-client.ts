@@ -1,5 +1,5 @@
 import axios from "axios";
-import { storage } from "./storage";
+import { getSession } from "./encryption";
 
 const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "/api",
@@ -9,7 +9,7 @@ const apiClient = axios.create({
 });
 
 apiClient.interceptors.request.use((config) => {
-  const token = storage.getToken();
+  const token = getSession()?.sessionId;
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }

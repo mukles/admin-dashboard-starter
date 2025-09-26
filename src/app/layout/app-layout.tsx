@@ -76,13 +76,7 @@ export function AppLayout() {
           </SidebarMenu>
         </SidebarContent>
         <SidebarFooter>
-          <NavUser
-            user={{
-              name: "John Doe",
-              email: "john@example.com",
-              avatar: "/avatars/john.jpg",
-            }}
-          />
+          <NavUser />
         </SidebarFooter>
       </Sidebar>
       <SidebarInset>

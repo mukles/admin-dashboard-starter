@@ -1,5 +1,7 @@
-export interface User {
+export type User = {
   id: string;
-  username: string;
+  name: string;
   email: string;
-}
+  accessToken: string;
+  refreshToken: string;
+};

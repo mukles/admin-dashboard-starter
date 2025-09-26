@@ -1,14 +1,12 @@
 import { loginRoute, registerRoute } from "@/modules/auth";
 import { dashboardRoute } from "@/modules/dashboard/routes/dashboard-routes";
-import { userDetailRoute, usersListRoute } from "@/modules/users";
+import { protectedRoute } from "./protected-route";
+import { publicRoute } from "./public-route";
 import { rootRoute } from "./root-route";
 
 const routeTree = rootRoute.addChildren([
-  dashboardRoute,
-  loginRoute,
-  registerRoute,
-  usersListRoute,
-  userDetailRoute,
+  publicRoute.addChildren([loginRoute, registerRoute]),
+  protectedRoute.addChildren([dashboardRoute]),
 ]);
 
 export { routeTree };

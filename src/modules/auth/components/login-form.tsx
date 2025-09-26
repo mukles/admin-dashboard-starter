@@ -8,9 +8,11 @@ import {
   FormMessage,
 } from "@/shared/components/ui/form";
 import { Input } from "@/shared/components/ui/input";
+import { cookieService } from "@/shared/services";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { authService } from "../services";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -26,8 +28,10 @@ export function LoginForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // login(values.email, values.password);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const user = await authService.login(values.email, values.password);
+    cookieService.setCookie("accessToken", user.accessToken);
+    cookieService.setCookie("refreshToken", user.refreshToken);
   }
 
   return (

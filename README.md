@@ -135,10 +135,6 @@ VITE_APP_NAME=Admin Dashboard
 # Authentication
 VITE_JWT_SECRET_KEY=your-secret-key-here
 VITE_REFRESH_TOKEN_KEY=your-refresh-key-here
-
-# Features
-VITE_ENABLE_ANALYTICS=true
-VITE_ENABLE_NOTIFICATIONS=true
 ```
 
 ## 🛠️ Available Scripts
@@ -182,12 +178,6 @@ pnpm deps:audit       # Security audit
 - **shadcn/ui** - Accessible, customizable components
 - **Tailwind CSS 3** - Utility-first CSS framework
 - **Lucide Icons** - Beautiful icon library
-- **Framer Motion** - Animation library
-
-### State Management & Data Fetching
-
-- **Zustand** - Lightweight state management
-- **React Query** - Server state management
 - **React Hook Form** - Form handling
 - **Zod** - Runtime type validation
 
@@ -336,7 +326,7 @@ This project is licensed under the [MIT License](LICENSE) - see the LICENSE file
 - 📖 [Documentation](https://github.com/mukles/admin-dashboard-starter/wiki)
 - 🐛 [Issue Tracker](https://github.com/mukles/admin-dashboard-starter/issues)
 - 💬 [Discussions](https://github.com/mukles/admin-dashboard-starter/discussions)
-- 📧 Email: <support@your-domain.com>
+- 📧 Email: <muklesdev@gmail.com>
 
 ---
 

@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Shield } from "lucide-react";
+import { ENV } from "../constant";
 
 // interface LogoProps {
 //   src?: string;
@@ -20,7 +21,9 @@ export default function Logo() {
           <Shield className="h-5 w-5 text-primary-foreground" />
         </div>
         <div>
-          <h1 className="text-lg font-semibold text-foreground">AdminPanel</h1>
+          <h1 className="text-lg font-semibold text-foreground">
+            {ENV.APP_NAME}
+          </h1>
           <p className="text-xs text-muted-foreground">Management System</p>
         </div>
       </div>
